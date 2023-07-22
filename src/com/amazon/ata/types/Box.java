@@ -3,7 +3,7 @@ package com.amazon.ata.types;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Box extends Packaging{
+public class Box extends Packaging {
 
     private BigDecimal length;
     //This packaging's smallest dimension.
@@ -50,9 +50,18 @@ public class Box extends Packaging{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Box)) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Box)) {
+            return false;
+        }
+
+        if (!super.equals(o)) {
+            return false;
+        }
+
         Box box = (Box) o;
         return Objects.equals(getLength(), box.getLength()) && Objects.equals(getWidth(), box.getWidth()) && Objects.equals(getHeight(), box.getHeight());
     }
