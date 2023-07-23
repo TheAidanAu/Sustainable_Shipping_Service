@@ -6,9 +6,9 @@ import java.util.Objects;
 public class Box extends Packaging {
 
     private BigDecimal length;
-    //This packaging's smallest dimension.
+    //This box's smallest dimension.
     private BigDecimal width;
-    //This packaging's largest dimension.
+    //This box's largest dimension.
     private BigDecimal height;
 
     public Box(BigDecimal length, BigDecimal width, BigDecimal height) {

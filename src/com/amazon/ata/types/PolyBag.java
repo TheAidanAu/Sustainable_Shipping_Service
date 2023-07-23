@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class PolyBag extends Packaging {
     private BigDecimal volume;
 
-    /// need to remove the length, width, height varaibles from the Packaging and PolyBag class
+    /// need to remove the length, width, height variables from the Packaging and PolyBag class
     /**
      * Instantiates a new Packaging object.
      *

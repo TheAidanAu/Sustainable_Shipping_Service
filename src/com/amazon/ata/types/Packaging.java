@@ -19,9 +19,6 @@ public class Packaging {
     /**
      * Instantiates a new Packaging object.
      * @param material - the Material of the package
-     * @param length - the length of the package
-     * @param width - the width of the package
-     * @param height - the height of the package
      */
     public Packaging(Material material) {
         this.material = material;
