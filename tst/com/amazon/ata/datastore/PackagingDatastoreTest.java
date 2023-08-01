@@ -19,12 +19,11 @@ class PackagingDatastoreTest {
     FulfillmentCenter pdx1 = new FulfillmentCenter("PDX1");
 
     Packaging package10Cm = new Box(BigDecimal.valueOf(10), BigDecimal.valueOf(10), BigDecimal.valueOf(10));
-
     Packaging package20Cm = new Box(BigDecimal.valueOf(20), BigDecimal.valueOf(20), BigDecimal.valueOf(20));
-
     Packaging package40Cm = new Box(BigDecimal.valueOf(40), BigDecimal.valueOf(40), BigDecimal.valueOf(40));
-
     Packaging package60Cm = new Box(BigDecimal.valueOf(60), BigDecimal.valueOf(60), BigDecimal.valueOf(60));
+    Packaging package2000cc = new PolyBag(BigDecimal.valueOf(2000));
+    Packaging package10000cc = new PolyBag(BigDecimal.valueOf(10000));
 
     FcPackagingOption ind1_10Cm = new FcPackagingOption(ind1, package10Cm);
     FcPackagingOption abe2_20Cm = new FcPackagingOption(abe2, package20Cm);
@@ -35,14 +34,15 @@ class PackagingDatastoreTest {
     FcPackagingOption iad2_20Cm = new FcPackagingOption(iad2, package20Cm);
     FcPackagingOption pdx1_40Cm = new FcPackagingOption(pdx1, package40Cm);
     FcPackagingOption pdx1_60Cm = new FcPackagingOption(pdx1, package60Cm);
-
+    FcPackagingOption iad2_2000cc = new FcPackagingOption(iad2, package2000cc);
+    FcPackagingOption iad2_10000cc = new FcPackagingOption(iad2, package10000cc);
 
     @Test
     public void getFcPackagingOptions_get_returnAllOptions() {
         // GIVEN
         PackagingDatastore packagingDatastore = new PackagingDatastore();
         List<FcPackagingOption> expectedPackagingOptions = Arrays.asList(ind1_10Cm, abe2_20Cm, abe2_40Cm, yow4_10Cm,
-                yow4_20Cm, yow4_60Cm, iad2_20Cm, iad2_20Cm, pdx1_40Cm, pdx1_60Cm, pdx1_60Cm);
+                yow4_20Cm, yow4_60Cm, iad2_20Cm, iad2_20Cm, iad2_2000cc, iad2_10000cc, pdx1_40Cm, pdx1_60Cm, pdx1_60Cm);
 
         // WHEN
         List<FcPackagingOption> fcPackagingOptions = packagingDatastore.getFcPackagingOptions();
