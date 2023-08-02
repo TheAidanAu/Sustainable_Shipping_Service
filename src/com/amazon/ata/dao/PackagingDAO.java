@@ -20,32 +20,36 @@ public class PackagingDAO {
      */
     // Previously, there was a list of <FcPackagingOption>
     private Map<FulfillmentCenter, Set<Packaging>> fcPackagingOptions = new HashMap<>();
+    // So, at the end of this process, fcPackagingOptions map will contain each fulfillment center as a key
+    // and a set of unique packaging options as the value associated with each key
 
     /**
      * Instantiates a PackagingDAO object.
      * @param datastore Where to pull the data from for fulfillment center/packaging available mappings.
      */
     public PackagingDAO(PackagingDatastore datastore) {
+        // we need to keep the right half
+        // so look at what that returns, it returns a list FcPackagingOption
+        // so put that on the left half
         List<FcPackagingOption> packagingOptions = new ArrayList<>(datastore.getFcPackagingOptions());
-        //Logic: since it's a set, even if you add a dup, no dup will be kept
-        //Iterate through all the packing options, see if an option contains an existing key
-        // or else add a new Set of packaging
+        // Logic: since it's a set, even if you add a dup, no dup will be kept
+        // Iterate through all the packing options, see if an option contains an existing key
+        // If map already contains the key, add the packaging to the set.
+        // If not, create a new set, add the packaging, and put it into the map.
         for (FcPackagingOption packingOption: packagingOptions) {
-            if (fcPackagingOptions.containsKey(packingOption.getFulfillmentCenter())) {
-                FulfillmentCenter existingKey = packingOption.getFulfillmentCenter();
-                Packaging packaging = packingOption.getPackaging();
-                //You get the HashSet of Packaging by looking it up with a key
-                //You attempt to add it, if it's a dup, it won't add
-                fcPackagingOptions.get(existingKey).add(packaging);
+            FulfillmentCenter fc = packingOption.getFulfillmentCenter();
+            Packaging packaging = packingOption.getPackaging();
+            if (fcPackagingOptions.containsKey(fc)) {
+                fcPackagingOptions.get(fc).add(packaging);
+                // Retrieve the existing Packing Set by using the get method
+                // You attempt to add the packaging option,
+                // if the packaging option is a dup, the set stays the same
             } else {
-                FulfillmentCenter newKey = packingOption.getFulfillmentCenter();
-                Set<Packaging> newPackaingSet = new HashSet<>();
-                newPackaingSet.add(packingOption.getPackaging());
-                fcPackagingOptions.put(newKey, newPackaingSet);
+                Set<Packaging> newPackagingSet = new HashSet<>();
+                newPackagingSet.add(packaging);
+                fcPackagingOptions.put(fc, newPackagingSet);
             }
-
         }
-
     }
 
     /**
