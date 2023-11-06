@@ -1,0 +1,38 @@
+@startuml mastery_task_05_CD
+
+interface CostStrategy {
+    +getCost(ShipmentOption): ShipmentCost
+}
+
+class MonetaryCostStrategy implements CostStrategy {
+    +getCost(ShipmentOption): ShipmentCost
+}
+
+class CarbonCostStrategy implements CostStrategy {
+    +getCost(ShipmentOption): ShipmentCost
+}
+
+class WeightedCostStrategy implements CostStrategy{
+/' This class WeightedCostStrategy contains
+a MonetaryCostStrategy class
+and a CarbonCostStrategy class
+has-a relationship'/
+    -monetaryCostStrategy: MonetaryCostStrategy
+    -carbonCostStrategy: CarbonCostStrategy
+
+    +getCost(ShipmentOption): ShipmentCost
+}
+/'
+The following shoes implement relationship
+'/
+
+MonetaryCostStrategy ..|> CostStrategy
+CarbonCostStrategy ..|> CostStrategy
+WeightedCostStrategy ..|> CostStrategy
+
+/' *-- is showing a composition relationship or has-a relationship
+'/
+WeightedCostStrategy *-- MonetaryCostStrategy
+WeightedCostStrategy *-- CarbonCostStrategy
+
+@enduml
