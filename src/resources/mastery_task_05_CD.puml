@@ -31,6 +31,8 @@ CarbonCostStrategy ..|> CostStrategy
 WeightedCostStrategy ..|> CostStrategy
 
 /' *-- is showing a composition relationship or has-a relationship
+meaning you need to have these 2 in the arguments
+meaning you have to create an instance for these objects
 '/
 WeightedCostStrategy *-- MonetaryCostStrategy
 WeightedCostStrategy *-- CarbonCostStrategy
