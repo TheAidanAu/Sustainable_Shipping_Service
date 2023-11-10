@@ -50,11 +50,13 @@ public class ShipmentService {
             List<ShipmentOption> results = this.packagingDAO.findShipmentOptions(item, fulfillmentCenter);
             return getLowestCostShipmentOption(results);
         } catch (UnknownFulfillmentCenterException e) {
-            throw new RuntimeException ("This is invalid because this Fulfillment Center is unknown" + fulfillmentCenter.getFcCode(), e);
+            throw new RuntimeException("This is invalid because this Fulfillment Center is unknown" + fulfillmentCenter.getFcCode(), e);
         } catch (NoPackagingFitsItemException e) {
-            return ShipmentOption.builder().withItem(item).
-                    withFulfillmentCenter(fulfillmentCenter).
-                    withPackaging(null).build();
+            return ShipmentOption.builder()
+                    .withItem(item)
+                    .withFulfillmentCenter(fulfillmentCenter)
+                    .withPackaging(null)
+                    .build();
         }
     }
 
