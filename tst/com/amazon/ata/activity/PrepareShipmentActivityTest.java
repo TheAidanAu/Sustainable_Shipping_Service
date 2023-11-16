@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class PrepareShipmentActivityTest {
-
+// use this as as reference to work on the ShipmentServiceTest class
     private PrepareShipmentRequest request = PrepareShipmentRequest.builder()
         .withFcCode("fcCode")
         .withItemAsin("itemAsin")

@@ -6,11 +6,15 @@ import com.amazon.ata.datastore.PackagingDatastore;
 import com.amazon.ata.types.FulfillmentCenter;
 import com.amazon.ata.types.Item;
 import com.amazon.ata.types.ShipmentOption;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 class ShipmentServiceTest {
 
@@ -31,8 +35,19 @@ class ShipmentServiceTest {
     private FulfillmentCenter existentFC = new FulfillmentCenter("ABE2");
     private FulfillmentCenter nonExistentFC = new FulfillmentCenter("NonExistentFC");
 
-    private ShipmentService shipmentService = new ShipmentService(new PackagingDAO(new PackagingDatastore()),
-            new MonetaryCostStrategy());
+    // FIXME uncomment below again if needed
+//    private ShipmentService shipmentService = new ShipmentService(new PackagingDAO(new PackagingDatastore()),
+//            new MonetaryCostStrategy());
+    @InjectMocks
+        ShipmentService shipmentService;
+
+    @Mock
+    PackagingDAO packagingDAO;
+
+    @BeforeEach
+    void setUp() {
+        initMocks(this);
+    }
 
     @Test
     void findBestShipmentOption_existentFCAndItemCanFit_returnsShipmentOption() {
