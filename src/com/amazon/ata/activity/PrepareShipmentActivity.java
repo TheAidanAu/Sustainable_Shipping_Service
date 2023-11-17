@@ -1,5 +1,6 @@
 package com.amazon.ata.activity;
 
+import com.amazon.ata.exceptions.NoPackagingFitsItemException;
 import com.amazon.ata.service.ShipmentService;
 import com.amazon.ata.types.FulfillmentCenter;
 import com.amazon.ata.types.Item;
@@ -58,7 +59,12 @@ public class PrepareShipmentActivity
 
         FulfillmentCenter fulfillmentCenter = new FulfillmentCenter(request.getFcCode());
 
-        ShipmentOption shipmentOption = shipmentService.findShipmentOption(item, fulfillmentCenter);
+        ShipmentOption shipmentOption = null;
+        try {
+            shipmentOption = shipmentService.findShipmentOption(item, fulfillmentCenter);
+        } catch (NoPackagingFitsItemException e) {
+            throw new RuntimeException(e);
+        }
 
         if (shipmentOption == null) {
             return null;

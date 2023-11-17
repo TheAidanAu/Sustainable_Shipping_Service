@@ -45,18 +45,13 @@ public class ShipmentService {
      * @param fulfillmentCenter fulfillment center in which to look for the packaging
      * @return the lowest cost shipment option for the item and fulfillment center, or null if none found
      */
-    public ShipmentOption findShipmentOption(final Item item, final FulfillmentCenter fulfillmentCenter) {
+    public ShipmentOption findShipmentOption(final Item item, final FulfillmentCenter fulfillmentCenter)
+            throws NoPackagingFitsItemException {
         try {
             List<ShipmentOption> results = this.packagingDAO.findShipmentOptions(item, fulfillmentCenter);
             return getLowestCostShipmentOption(results);
         } catch (UnknownFulfillmentCenterException e) {
             throw new RuntimeException("This is invalid because this Fulfillment Center is unknown" + fulfillmentCenter.getFcCode(), e);
-        } catch (NoPackagingFitsItemException e) {
-            return ShipmentOption.builder()
-                    .withItem(item)
-                    .withFulfillmentCenter(fulfillmentCenter)
-                    .withPackaging(null)
-                    .build();
         }
     }
 
