@@ -76,7 +76,19 @@ class ShipmentServiceTest {
     @Test
     void findBestShipmentOption_nonExistentFCAndItemCanFit_returnsShipmentOption() throws UnknownFulfillmentCenterException, NoPackagingFitsItemException {
         // GIVEN & WHEN
-        when(monetaryCostStrategy.getCost(testOption)).thenReturn(testCost);
+        when(packagingDAO.findShipmentOptions(testItem, testFC))
+                .thenThrow(UnknownFulfillmentCenterException.class);
+
+        // THEN
+        assertThrows(RuntimeException.class, () -> {
+            shipmentService.findShipmentOption(testItem, testFC);
+        }, "If there is no such Fulfillment Center, we throw the UnknownFulfillmentCenterException, which then throw RuntimeException. ");
+    }
+
+    @Test
+    void findBestShipmentOption_existentFCAndItemCannotFit_returnsShipmentOption()
+            throws UnknownFulfillmentCenterException, NoPackagingFitsItemException{
+        // GIVEN & WHEN
         when(packagingDAO.findShipmentOptions(testItem, testFC))
                 .thenThrow(NoPackagingFitsItemException.class);
 
@@ -87,25 +99,15 @@ class ShipmentServiceTest {
     }
 
     @Test
-    void findBestShipmentOption_existentFCAndItemCannotFit_returnsShipmentOption()
+    void findBestShipmentOption_nonExistentFCAndItemCannotFit_returnsShipmentOption()
             throws UnknownFulfillmentCenterException, NoPackagingFitsItemException{
         // GIVEN & WHEN
-
-//        when(packagingDAO.findShipmentOptions(any(Item.class), any(FulfillmentCenter.class)))
-//                .thenThrow(NoPackagingFitsItemException.class);
-
-        ShipmentOption shipmentOption = shipmentService.findShipmentOption(any(Item.class), any(FulfillmentCenter.class));
-
+        when(packagingDAO.findShipmentOptions(testItem, testFC))
+                .thenThrow(UnknownFulfillmentCenterException.class);
         // THEN
-        assertNull(shipmentOption);
+        assertThrows(RuntimeException.class, () -> {
+            shipmentService.findShipmentOption(testItem, testFC);
+        }, "If there is no such Fulfillment Center, we throw the UnknownFulfillmentCenterException, which then throw RuntimeException. ");
     }
 
-//    @Test
-//    void findBestShipmentOption_nonExistentFCAndItemCannotFit_returnsShipmentOption() {
-//        // GIVEN & WHEN
-//        ShipmentOption shipmentOption = shipmentService.findShipmentOption(any(Item.class), any(FulfillmentCenter.class));
-//
-//        // THEN
-//        assertNull(shipmentOption);
-//    }
 }
